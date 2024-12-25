@@ -32,27 +32,31 @@ const gradeRanges = {
         'اللغة العربية': { max: 600, min: 240 },
         'التاريخ': { max: 300, min: 120 },
         'الجغرافيا': { max: 400, min: 160 },
-        'إنكليزي': { max: 300, min: 120 },
-        'فرنسي': { max: 300, min: 120 },
-        'ديانة': { max: 200, min: 80 },
-        'وطنية': { max: 200, min: 80 },
+        'اللغة الانكليزية': { max: 300, min: 120 },
+        'اللغة الفرنسية': { max: 300, min: 120 },
+        'التربية الاسلامية': { max: 200, min: 80 },
+        'التربية الوطنية': { max: 200, min: 80 },
+        'المجموع العام': { max: 2700, min: 1080 },
+
     },
     'تاسع': {
         'الرياضيات': { max: 600, min: 240 },
-        'العربي': { max: 400, min: 160 },
+        'اللغة العربية': { max: 400, min: 160 },
         'العلوم العامة': { max: 300, min: 120 },
-        'إنكليزي': { max: 300, min: 120 },
-        'فرنسي': { max: 300, min: 120 },
-        'ديانة': { max: 200, min: 80 },
-        'اجتماعيات': { max: 200, min: 80 },
+        'اللغة الانكليزية': { max: 300, min: 120 },
+        'اللغة الفرنسية': { max: 300, min: 120 },
+        'التربية الاسلامية': { max: 200, min: 80 },
+        'الاجتماعيات': { max: 200, min: 80 },
+        'المجموع العام': { max: 3100, min: 1240 },
+
     }
 };
 
 // الأعمدة الخاصة بالمجموع العام ومادة العربي لكل فرع
 const columnIndices = {
     'علمي': { total: 13, arabic: 6 },
-    'ادبي': { total: 12, arabic: 5 },
-    'تاسع': { total: 11, arabic: 6 }
+    'ادبي': { total: 12, arabic: 6 },
+    'تاسع': { total: 11, arabic: 10 }
 };
 
 // تحميل البيانات من الملفات
@@ -150,18 +154,18 @@ function displayResults() {
 
                 // إذا كانت الخلية "النتيجة"، أضف حالة النجاح أو الرسوب
                 if (header === 'النتيجة') {
-                    let status = 'ناجح';
+                    let status = 'قريبا';
                     let resultClass = 'success';  // اللون الافتراضي للنجاح
                     // التحقق من النتيجة الإجمالية والعربية
-                    if (totalScore < passingScore) {
-                        status = 'راسب';
-                        resultClass = 'fail';  // اللون الافتراضي للرسوب
-                    }
+                    // if (totalScore < passingScore) {
+                    //     status = 'راسب';
+                    //     resultClass = 'fail';  // اللون الافتراضي للرسوب
+                    // }
                     // التحقق من الرسوب في اللغة العربية
-                    if (arabicScore < arabicPassingScore) {
-                        status = 'راسب (العربي)';
-                        resultClass = 'fail'; // اللون الافتراضي للرسوب
-                    }
+                    // if (arabicScore < arabicPassingScore) {
+                    //     status = 'راسب (العربي)';
+                    //     resultClass = 'fail'; // اللون الافتراضي للرسوب
+                    // }
 
                     cellValue.innerHTML = `<span class="result-status ${resultClass}">${status}</span>`;
                 }

@@ -120,7 +120,7 @@ h1 {
     top: 0; /* تثبيت في الأعلى */
     z-index: 2; /* الأولوية */
 }
-@media (max-width: 600px) {
+@media (max-width: 300px) {
     h1 {
         margin-top: 20px; /* زيادة المسافة العلوية */
         font-size: 18px; /* حجم أصغر للنص */
@@ -340,7 +340,7 @@ h1 {
 }
 
 /* تحسين العرض على الشاشات الصغيرة */
-@media (max-width: 600px) {
+@media (max-width: 300px) {
     .styled-table {
         grid-template-columns: 1fr;
     }

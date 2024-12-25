@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>  نتائج الطلاب حسب الاسم</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Cocon:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="icon" href="./assets/img/Untitled-3.ico" type="image/x-icon">
+<style>
+     /* CSS للقائمة المنسدلة المخصصة */
+     .custom-select {
+            position: relative;
+            width: 100%; /* اجعلها تأخذ عرض الحاوية */
+            cursor: pointer;
+        }
+        .custom-select  i {
+           color: hsl(197, 98%, 25%);
+        }
+        .selected-option {
+            padding: 10px;
+            border: 1px solid #ced4da; /* لون حدود Bootstrap */
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white; /* خلفية بيضاء */
+        }
+        .options {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            border: 1px solid #ced4da;
+            border-top: none; /* إزالة الحد العلوي */
+            border-radius: 0 0 5px 5px;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            z-index: 1000; /* مهم لتظهر فوق العناصر الأخرى */
+            max-height: 200px; /* تحديد ارتفاع أقصى للقائمة */
+            overflow-y: auto; /* إضافة شريط تمرير إذا لزم الأمر */
+            display: none;
+        }
+        .options.show {
+            display: block;
+        }
+        .options li {
+            padding: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        .options li:hover {
+            background-color: #f8f9fa; /* لون خلفية عند التمرير */
+        }
+        .options li i {
+            margin-left: 10px; /* مسافة بين الأيقونة والنص */
+            color: hsl(262, 54%, 47%);
+        }
+       
+       
+</style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">العودة للبحث</a>
+            <span class="navbar-text" id="resultsCount"></span>
+        </div>
+    </nav>
+    <div class="container mt-5" id="resultsContainer">
+        <div class="alert alert-info text-center" id="noResultsMessage" style="display: none;">لم يتم العثور على نتائج.</div>
+    </div>
+
+        <div class="bg-image"></div>
+        <div class="container">
+            <h1 class="text-center mb-4 fw-bold">نتائج الامتحان النصفي</h1>
+    
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="filter" class="form-label"><i class="fas fa-filter me-2"></i> اختر الفرع:</label>
+                                <div class="custom-select">
+                                    <div class="selected-option">الفروع <i class="fas fa-chevron-down"></i></div>
+                                    <ul class="options">
+                                        <!-- <li data-value=""><i class="fas fa-list"></i> الفروع</li> -->
+                                        <li data-value="ادبي"><i class="fas fa-book"></i> أدبي</li>
+                                        <li data-value="علمي"><i class="fas fa-flask"></i> علمي</li>
+                                        <li data-value="تاسع"><i class="fas fa-graduation-cap"></i> تاسع</li>
+                                    </ul>
+                                    <input type="hidden" name="filter" id="filter">
+                                </div>
+                            </div>
+    
+                            <div class="mb-3">
+                                <label for="search" class="form-label"><i class="fas fa-search me-2"></i> الاسم</label>
+                                <input type="text" id="search" class="form-control" placeholder="أدخل رقم الاكتتاب">
+                            </div>
+    
+                            <div class="d-grid gap-2">
+                                <button id="searchButton" class="btn btn-primary"><i class="fas fa-check me-2"></i> بحث</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div id="resultsContainer" class="mt-4">
+                <p class="text-center text-muted1">الرجاء اختيار الفرع وإدخال رقم الاكتتاب والضغط على زر البحث لعرض النتيجة.</p>
+            </div>
+            
+        </div>
+        <!-- <div class="thth">
+                <img src="/thaa.svg" alt="شعار" class="thth-img small-width">
+            </div> -->
+    
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <script src="./assets/js/script.js"></script>
+        <script>
+            const customSelect = document.querySelector('.custom-select');
+            const selectedOption = customSelect.querySelector('.selected-option');
+            const options = customSelect.querySelector('.options');
+            const filterInput = customSelect.querySelector('#filter');
+    
+            selectedOption.addEventListener('click', () => {
+                options.classList.toggle('show');
+            });
+    
+            options.querySelectorAll('li').forEach(option => {
+                option.addEventListener('click', () => {
+                    selectedOption.innerHTML = option.innerHTML + '<i class="fas fa-chevron-down"></i>'; // وضع النص والأيقونة
+                    options.classList.remove('show');
+                    filterInput.value = option.dataset.value;
+                });
+            });
+    
+            // إغلاق القائمة عند النقر خارجها
+            document.addEventListener('click', (event) => {
+                if (!customSelect.contains(event.target)) {
+                    options.classList.remove('show');
+                }
+            });
+        </script>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>
+<!-- قديم ---------///////////////////////////////////////////////////////////////////////////////////// -->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+   
+   
+</head>
+<body>
+    <div class="bg-image"></div>
+    <div class="container">
+        <h1 class="text-center mb-4 fw-bold">نتائج الامتحان النصفي</h1>
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="filter" class="form-label"><i class="fas fa-filter me-2"></i> اختر الفرع:</label>
+                            <div class="custom-select">
+                                <div class="selected-option">الفروع <i class="fas fa-chevron-down"></i></div>
+                                <ul class="options">
+                                    <!-- <li data-value=""><i class="fas fa-list"></i> الفروع</li> -->
+                                    <li data-value="ادبي"><i class="fas fa-book"></i> أدبي</li>
+                                    <li data-value="علمي"><i class="fas fa-flask"></i> علمي</li>
+                                    <li data-value="تاسع"><i class="fas fa-graduation-cap"></i> تاسع</li>
+                                </ul>
+                                <input type="hidden" name="filter" id="filter">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="search" class="form-label"><i class="fas fa-search me-2"></i> رقم الاكتتاب:</label>
+                            <input type="text" id="search" class="form-control" placeholder="أدخل رقم الاكتتاب">
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button id="searchButton" class="btn btn-primary"><i class="fas fa-check me-2"></i> بحث</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="resultsContainer" class="mt-4">
+            <p class="text-center text-muted1">الرجاء اختيار الفرع وإدخال رقم الاكتتاب والضغط على زر البحث لعرض النتيجة.</p>
+        </div>
+        
+    </div>
+    <!-- <div class="thth">
+            <img src="/thaa.svg" alt="شعار" class="thth-img small-width">
+        </div> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="./assets/js/script.js"></script>
+   
+</body>
+</html>

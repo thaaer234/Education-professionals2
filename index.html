@@ -73,10 +73,9 @@
             <div class="col-md-6">
                 <div class="card shadow">
                     <div class="card-body">
-                        <!-- فلتر الفرع -->
                         <div class="mb-3">
                             <label for="filter" class="form-label"><i class="fas fa-filter me-2"></i> اختر الفرع:</label>
-                            <div class="custom-select" id="branchSelect">
+                            <div class="custom-select" id="filterSelect">
                                 <div class="selected-option">الفروع <i class="fas fa-chevron-down"></i></div>
                                 <ul class="options">
                                     <li data-value="ادبي"><i class="fas fa-book"></i> أدبي</li>
@@ -87,7 +86,6 @@
                             </div>
                         </div>
 
-                        <!-- فلتر المعهد -->
                         <div class="mb-3">
                             <label for="institute" class="form-label"><i class="fas fa-school me-2"></i> اختر المعهد:</label>
                             <div class="custom-select" id="instituteSelect">
@@ -102,13 +100,11 @@
                             </div>
                         </div>
 
-                        <!-- حقل رقم الاكتتاب -->
                         <div class="mb-3">
                             <label for="search" class="form-label"><i class="fas fa-search me-2"></i> رقم الاكتتاب:</label>
                             <input type="number" id="search" class="form-control" placeholder="أدخل رقم الاكتتاب">
                         </div>
 
-                        <!-- زر البحث -->
                         <div class="d-grid gap-2">
                             <button id="searchButton" class="btn btn-primary"><i class="fas fa-check me-2"></i> بحث</button>
                         </div>
@@ -118,52 +114,47 @@
         </div>
 
         <div id="resultsContainer" class="mt-4">
-            <p class="text-center text-muted1">الرجاء اختيار الفرع وإدخال رقم الاكتتاب والضغط على زر البحث لعرض النتيجة.</p>
+            <p class="text-center text-muted">الرجاء اختيار الفرع وإدخال رقم الاكتتاب والضغط على زر البحث لعرض النتيجة.</p>
         </div>
-
+        
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="./assets/js/script.js"></script>
     <script>
-        // تحديث خيارات المعهد بناءً على الفرع المحدد
-        const instituteMap = {
-            'علمي': ['معهد اليمان', 'معهد الإدريسي', 'معهد الخليل'],
-            'ادبي': ['معهد اليمان', 'معهد خطوة'],
-            'تاسع': ['معهد الخليل', 'معهد الإدريسي']
-        };
+        const customSelect = document.querySelector('.custom-select');
+        const selectedOption = customSelect.querySelector('.selected-option');
+        const options = customSelect.querySelector('.options');
+        const filterInput = customSelect.querySelector('#filter');
+        
+        const customInstituteSelect = document.querySelector('#instituteSelect');
+        const selectedInstituteOption = customInstituteSelect.querySelector('.selected-option');
+        const instituteOptions = customInstituteSelect.querySelector('.options');
+        const instituteInput = customInstituteSelect.querySelector('#institute');
 
-        const branchSelect = document.querySelector('#branchSelect');
-        const selectedBranch = branchSelect.querySelector('.selected-option');
-        const branchOptions = branchSelect.querySelector('.options');
-        const branchInput = branchSelect.querySelector('#filter');
-
-        const instituteSelect = document.querySelector('#instituteSelect');
-        const selectedInstitute = instituteSelect.querySelector('.selected-option');
-        const instituteOptions = instituteSelect.querySelector('.options');
-        const instituteInput = instituteSelect.querySelector('#institute');
-
-        selectedBranch.addEventListener('click', () => {
-            branchOptions.classList.toggle('show');
+        // 1. لفتح وإغلاق القائمة المنسدلة (فرع)
+        selectedOption.addEventListener('click', () => {
+            options.classList.toggle('show');
         });
 
-        branchOptions.querySelectorAll('li').forEach(option => {
-            option.addEventListener('click', () => {
-                selectedBranch.innerHTML = option.innerHTML + '<i class="fas fa-chevron-down"></i>';
-                branchOptions.classList.remove('show');
-                branchInput.value = option.dataset.value;
-
-                // تحديث خيارات المعهد بناءً على الفرع المحدد
-                updateInstituteOptions(option.dataset.value);
-            });
-        });
-
-        selectedInstitute.addEventListener('click', () => {
+        // 2. لفتح وإغلاق القائمة المنسدلة (معهد)
+        selectedInstituteOption.addEventListener('click', () => {
             instituteOptions.classList.toggle('show');
         });
 
+        // 3. تحديث الفلتر (فرع)
+        options.querySelectorAll('li').forEach(option => {
+            option.addEventListener('click', () => {
+                selectedOption.innerHTML = option.innerHTML + '<i class="fas fa-chevron-down"></i>';
+                options.classList.remove('show');
+                filterInput.value = option.dataset.value;
+            });
+        });
+
+        // 4. تحديث الفلتر (معهد)
         instituteOptions.querySelectorAll('li').forEach(option => {
             option.addEventListener('click', () => {
-                selectedInstitute.innerHTML = option.innerHTML + '<i class="fas fa-chevron-down"></i>';
+                selectedInstituteOption.innerHTML = option.innerHTML + '<i class="fas fa-chevron-down"></i>';
                 instituteOptions.classList.remove('show');
                 instituteInput.value = option.dataset.value;
             });
@@ -171,27 +162,32 @@
 
         // إغلاق القوائم عند النقر خارجها
         document.addEventListener('click', (event) => {
-            if (!branchSelect.contains(event.target)) {
-                branchOptions.classList.remove('show');
+            if (!customSelect.contains(event.target)) {
+                options.classList.remove('show');
             }
-            if (!instituteSelect.contains(event.target)) {
+            if (!customInstituteSelect.contains(event.target)) {
                 instituteOptions.classList.remove('show');
             }
         });
 
-        // تحديث خيارات المعهد بناءً على الفرع المحدد
-        function updateInstituteOptions(branchValue) {
-            const options = instituteMap[branchValue] || [];
-            instituteOptions.innerHTML = options.map(option => `<li data-value="${option}">${option}</li>`).join('');
-            
-            instituteOptions.querySelectorAll('li').forEach(option => {
-                option.addEventListener('click', () => {
-                    selectedInstitute.innerHTML = option.innerHTML + '<i class="fas fa-chevron-down"></i>';
-                    instituteOptions.classList.remove('show');
-                    instituteInput.value = option.dataset.value;
-                });
-            });
-        }
+        // تنفيذ البحث عند الضغط على زر البحث
+        document.getElementById('searchButton').addEventListener('click', () => {
+            const filterValue = filterInput.value;
+            const instituteValue = instituteInput.value;
+            const searchValue = document.getElementById('search').value;
+            const resultsContainer = document.getElementById('resultsContainer');
+
+            if (!filterValue || !instituteValue || !searchValue) {
+                resultsContainer.innerHTML = '<p class="text-center text-muted">الرجاء اختيار الفرع وإدخال رقم الاكتتاب.</p>';
+                return;
+            }
+
+            resultsContainer.innerHTML = '<p class="text-center text-muted">جاري البحث...</p>';
+
+            // إجراء البحث هنا بناءً على الفلاتر
+           
+               
+        });
     </script>
 </body>
 </html>

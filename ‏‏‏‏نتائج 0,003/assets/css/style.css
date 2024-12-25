@@ -1,0 +1,389 @@
+/* استيراد الخطوط */
+@font-face {
+    font-family: 'yaman';
+    src: url('./Cocon_\ Next\ Arabic-Bold.otf');
+}
+
+/* المتغيرات */
+:root {
+    --primary-color: #856e43; /* تم تغيير اللون ليناسب لون bootstrap الأزرق */
+    --light-gray: #f8f9fa;
+    --border-color: #dee2e6;
+    --text-color: #030507;
+    --light-text-color: #ffffff;
+    --background-color: #ffffff;
+}
+
+/* أنماط عامة */
+* {
+    font-family: 'yaman', sans-serif;
+    box-sizing: border-box; /* مهم: لحساب الأحجام بشكل صحيح */
+}
+
+body {
+    font-family: 'yaman', sans-serif;
+    font-weight: 700;
+    direction: rtl;
+    text-align: right;
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    background-color: var(--background-color);
+   /* منع ظهور شريط التمرير الأفقي للصفحة بشكل عام */
+    justify-content: center; /* توسيط الجدول أفقياً */
+    align-items: center; /* توسيط الجدول عمودياً */
+    height: 100vh; /* جعل ارتفاع الجسم 100% من ارتفاع النافذة */
+    margin: 0; /* إزالة الهوامش الافتراضية */
+}
+
+/* خلفية الصورة */
+.bg-image {
+    background-image: url("/assets/img/Untitled-1.jpg");
+    background-size: cover;
+    background-position: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* opacity: 0.5; */
+    z-index: -1;
+}
+
+h1 {
+    color: var(--primary-color);
+    margin-bottom: 30px;
+}
+
+.container {
+    flex: 1;
+    max-width: 960px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+/* تثبيت الكارد */
+.card {
+    position: sticky; /* تثبيت الكارد */
+    top: 10px; /* مسافة من الأعلى لتجنب التداخل */
+    z-index: 1000; /* يظهر فوق المحتوى */
+    width: 100%; /* عرض الكارد */
+    max-width: 960px; /* الحد الأقصى للعرض */
+    margin: 0 auto; /* توسيط */
+    background-color: var(--light-gray); /* لون الخلفية */
+    padding: 20px; /* حشوة داخلية */
+    border-radius: 10px; /* زوايا منحنية */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* ظل خفيف */
+    border: 1px solid var(--border-color); /* حد */
+}
+
+/* حاوية النتائج */
+#resultsContainer {
+    margin-top: 20px; /* مسافة بين الكارد والنتائج */
+    overflow-y: auto; /* شريط تمرير عمودي */
+    width: 100%; /* عرض الحاوية */
+    max-width: 960px; /* توافق العرض مع الكارد */
+    max-height: calc(100vh - 200px); /* ارتفاع ديناميكي */
+    padding: 10px; /* حشوة داخلية */
+    border: 1px solid var(--border-color); /* حد */
+    border-radius: 10px; /* زوايا منحنية */
+    background-color: var(--background-color); /* خلفية النتائج */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* ظل خفيف */
+}
+
+/* تحسين عرض الجدول */
+.styled-table {
+    width: 100%;
+    border-collapse: collapse; /* دمج الحدود */
+    font-size: 16px; /* حجم النص */
+    text-align: center; /* محاذاة النصوص */
+}
+
+.styled-table th, .styled-table td {
+    padding: 10px; /* حشوة داخلية */
+    border: 1px solid var(--border-color); /* حدود */
+}
+
+.styled-table th {
+    background-color: var(--primary-color); /* خلفية */
+    color: white; /* لون النص */
+    position: sticky; /* تثبيت الرؤوس */
+    top: 0; /* تثبيت في الأعلى */
+    z-index: 2; /* الأولوية */
+}
+@media (max-width: 600px) {
+    h1 {
+        margin-top: 20px; /* زيادة المسافة العلوية */
+        font-size: 18px; /* حجم أصغر للنص */
+    }
+
+    .card {
+        margin-top: 15px; /* زيادة المسافة العلوية للكارد */
+        padding: 10px; /* تقليل الحشوة لتوفير مساحة */
+    }
+
+    #resultsContainer {
+        max-height: calc(100vh - 400px); /* تقليل ارتفاع الحاوية */
+        padding: 5px; /* تقليل الحشوة */
+        overflow-y: auto; /* شريط تمرير عمودي */
+    }
+
+    .styled-table td {
+        font-size: 14px; /* تصغير النص داخل الجدول */
+    }
+
+    .styled-table th {
+        font-size: 12px; /* تصغير النص في الرأس */
+    }
+}
+h1 {
+    margin-top: 70px; /* زيادة المسافة العلوية */
+    font-size: 30px; /* حجم أصغر للنص */
+}
+
+.card {
+    margin-top: 2px; /* زيادة المسافة العلوية للكارد */
+    padding: 5px; /* تقليل الحشوة لتوفير مساحة */
+}
+
+#resultsContainer {
+    max-height: calc(100vh - 350px); /* تقليل ارتفاع الحاوية */
+    padding: 5px; /* تقليل الحشوة */
+    overflow-y: auto; /* شريط تمرير عمودي */
+}
+
+.styled-table td {
+    font-size: 14px; /* تصغير النص داخل الجدول */
+}
+
+.styled-table th {
+    font-size: 12px; /* تصغير النص في الرأس */
+}
+
+
+/* تحسين شريط التمرير */
+#resultsContainer::-webkit-scrollbar {
+    width: 8px;
+}
+
+#resultsContainer::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+
+#resultsContainer::-webkit-scrollbar-thumb:hover {
+    background: #5c5c5c;
+}
+
+
+/* تحسين النصوص والنتائج داخل الكارد */
+.card-body p, .card-body h1, .card-body h2 {
+    margin: 0; /* إزالة الهوامش الافتراضية */
+    text-align: center; /* توسيط النص */
+}
+
+
+
+.result-card {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.result-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+    padding: 15px;
+    border-bottom: none;
+}
+
+.result-info {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.result-info > div {
+    flex: 1 1 50%;
+    padding: 10px;
+}
+
+.result-info strong {
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.btn-primary:hover {
+    background-color: #5c5c5c;
+    border-color: #5c5c5c;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
+}
+
+.form-label {
+    font-weight: 500;
+}
+
+#resultsContainer p {
+    padding: 20px;
+    border-radius: 20px;
+    background-color: #856e43;
+    color: var(--light-text-color);
+    text-align: center;
+}
+
+
+
+/* تنسيق الجدول الجديد */
+.styled-table {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* الأعمدة تتكيف مع حجم الشاشة */
+    gap: 15px;
+    width: 100%;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: center;
+    border: none;
+}
+
+/* تنسيق الخلية */
+.styled-table .cell {
+    background-color: var(--light-gray);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.styled-table .cell:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* عنوان الخلية */
+.styled-table .cell .cell-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    text-transform: capitalize;
+}
+
+/* محتوى الخلية */
+.styled-table .cell .cell-value {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+/* القيم العليا والدنيا */
+.styled-table .cell .range-info {
+    font-size: 12px;
+    color: gray;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.styled-table .cell .icon-up {
+    color: green;
+    font-size: 14px;
+}
+
+.styled-table .cell .icon-down {
+    color: red;
+    font-size: 14px;
+}
+
+/* حالة النجاح أو الرسوب */
+.result-status {
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    margin-top: 10px;
+}
+
+.result-status.success {
+    background-color: green;
+}
+
+.result-status.fail {
+    background-color: red;
+}
+
+/* تحسين العرض على الشاشات الصغيرة */
+@media (max-width: 600px) {
+    .styled-table {
+        grid-template-columns: 1fr;
+    }
+
+    .styled-table .cell {
+        padding: 10px;
+    }
+
+    .styled-table .cell .cell-title {
+        font-size: 12px;
+    }
+
+    .styled-table .cell .cell-value {
+        font-size: 16px;
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+@media (max-width: 600px) {
+    .bg-image{
+        background-image: url(/assets/img/Untitled-1.jpg);
+    }}
+   
+   
+    .success {
+        color: green;
+    }
+    
+    .fail {
+        color: red;
+    }
+    
+    .result-status {
+        font-weight: bold;
+        color: white;
+    }
+    
+    
+/* .form-control2:focus+label{
+    transform: translateY(-25px);
+    color: hsl(197, 98%, 25%);
+
+}
+.form-control2:focus{
+    border-color: hsl(197, 98%, 25%);
+} */

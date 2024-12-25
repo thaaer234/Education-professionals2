@@ -11,6 +11,11 @@
     <link rel="icon" href="./assets/img/Untitled-3.ico" type="image/x-icon">
 
     <style>
+        /* تغيير اللون إلى الأبيض للجملة داخل <p> */
+        .text-muted {
+            color: white !important;
+        }
+
         /* CSS للقائمة المنسدلة المخصصة */
         .custom-select {
             position: relative;
@@ -168,25 +173,6 @@
             if (!customInstituteSelect.contains(event.target)) {
                 instituteOptions.classList.remove('show');
             }
-        });
-
-        // تنفيذ البحث عند الضغط على زر البحث
-        document.getElementById('searchButton').addEventListener('click', () => {
-            const filterValue = filterInput.value;
-            const instituteValue = instituteInput.value;
-            const searchValue = document.getElementById('search').value;
-            const resultsContainer = document.getElementById('resultsContainer');
-
-            if (!filterValue || !instituteValue || !searchValue) {
-                resultsContainer.innerHTML = '<p class="text-center text-muted">الرجاء اختيار الفرع وإدخال رقم الاكتتاب.</p>';
-                return;
-            }
-
-            resultsContainer.innerHTML = '<p class="text-center text-muted">جاري البحث...</p>';
-
-            // إجراء البحث هنا بناءً على الفلاتر
-           
-               
         });
     </script>
 </body>

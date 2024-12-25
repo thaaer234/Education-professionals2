@@ -368,7 +368,7 @@ h1 {
 }
 @media (max-width: 300px) {
     .bg-image{
-        background-image: url(/assets/img/Untitled-1.jpg);
+        background-image: url(./Untitled-1.jpg);
     }}
    
    

@@ -63,6 +63,13 @@ h1 {
     margin: 20px auto;
     padding: 20px;
 }
+.text-muted{
+    color: beige;
+}
+.mt-4{
+    color: white;
+}
+
 
 /* تثبيت الكارد */
 .card {
@@ -87,9 +94,9 @@ h1 {
     max-width: 960px; /* توافق العرض مع الكارد */
     max-height: calc(100vh - 200px); /* ارتفاع ديناميكي */
     padding: 10px; /* حشوة داخلية */
-    border: 1px solid var(--border-color); /* حد */
+  /* حد */
     border-radius: 10px; /* زوايا منحنية */
-    background-color: var(--background-color); /* خلفية النتائج */
+     /* خلفية النتائج */
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* ظل خفيف */
 }
 
@@ -359,9 +366,9 @@ h1 {
         transform: rotate(360deg);
     }
 }
-@media (max-width: 300px) {
+@media (max-width: 600px) {
     .bg-image{
-        background-image: url(./Untitled-1.jpg);
+        background-image: url(/assets/img/Untitled-1.jpg);
     }}
    
    

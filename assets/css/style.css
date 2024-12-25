@@ -359,7 +359,7 @@ h1 {
         transform: rotate(360deg);
     }
 }
-@media (max-width: 600px) {
+@media (max-width: 300px) {
     .bg-image{
         background-image: url(./Untitled-1.jpg);
     }}
